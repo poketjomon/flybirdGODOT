@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://5r3867bmwg8g"]
+
+[ext_resource type="Script" path="res://Script/obstacle2.gd" id="1_t6ipr"]
+[ext_resource type="Texture2D" uid="uid://dk5ey7ll8wnux" path="res://Assets/Tiles/Style 1/PipeStyle1.png" id="2_jhmbl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmwwk"]
+atlas = ExtResource("2_jhmbl")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_er2ty"]
+size = Vector2(26, 62)
+
+[node name="Obstacle2" type="Node2D" groups=["obstacle"]]
+
+[node name="obstacle2" type="CharacterBody2D" parent="."]
+script = ExtResource("1_t6ipr")
+
+[node name="Sprite2D" type="Sprite2D" parent="obstacle2"]
+texture = SubResource("AtlasTexture_qmwwk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="obstacle2"]
+shape = SubResource("RectangleShape2D_er2ty")
+
+[node name="RayCast2D" type="RayCast2D" parent="obstacle2"]
+target_position = Vector2(3, 943)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="obstacle2" method="_on_timer_timeout"]

@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://dky4q0xbpi8bm"]
+
+[ext_resource type="Script" path="res://Script/obstacle1.gd" id="1_0y2vs"]
+[ext_resource type="Texture2D" uid="uid://dk5ey7ll8wnux" path="res://Assets/Tiles/Style 1/PipeStyle1.png" id="1_hrpef"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_igsmw"]
+size = Vector2(28, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opnh8"]
+atlas = ExtResource("1_hrpef")
+region = Rect2(96, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10wvx"]
+atlas = ExtResource("1_hrpef")
+region = Rect2(0, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwwb5"]
+atlas = ExtResource("1_hrpef")
+region = Rect2(64, 0, 32, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffibu"]
+atlas = ExtResource("1_hrpef")
+region = Rect2(32, 0, 32, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ws0s6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opnh8")
+}],
+"loop": true,
+"name": &"blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10wvx")
+}],
+"loop": true,
+"name": &"green",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwwb5")
+}],
+"loop": true,
+"name": &"red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffibu")
+}],
+"loop": true,
+"name": &"yellow",
+"speed": 5.0
+}]
+
+[node name="Obstacle" type="Node2D" groups=["obstacle"]]
+
+[node name="obstacle" type="CharacterBody2D" parent="."]
+script = ExtResource("1_0y2vs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="obstacle"]
+shape = SubResource("RectangleShape2D_igsmw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="obstacle"]
+sprite_frames = SubResource("SpriteFrames_ws0s6")
+animation = &"yellow"
+
+[node name="RayCast2D" type="RayCast2D" parent="obstacle"]
+target_position = Vector2(-4, 562)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="Timer" to="obstacle" method="_on_timer_timeout"]
